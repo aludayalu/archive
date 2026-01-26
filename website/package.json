@@ -9,6 +9,7 @@
     "lint": "eslint --fix"
   },
   "dependencies": {
+    "@heroui/system": "^2.4.25",
     "@heroui/theme": "^2.4.25",
     "@react-aria/visually-hidden": "3.8.29",
     "clsx": "2.1.1",
