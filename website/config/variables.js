@@ -1,4 +1,4 @@
-export var API_URL = "https://server.archive.aaravdayal.com"
+export var API_URL = "https://archiveserver.aaravdayal.com"
 
 try {
     if (location.hostname !== "archive.aaravdayal.com") {
