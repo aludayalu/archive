@@ -23,6 +23,7 @@ export default function Albums() {
 
     return (
         <>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <div style={{width: "100svw"}}>
             <div className="p-4 flex justify-between">
                 <div className="font-bold text-3xl">Memories</div>

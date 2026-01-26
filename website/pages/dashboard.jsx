@@ -74,8 +74,8 @@ export default function Dashboard({cookies}) {
 
     return (
         <>
-        <div className="flex lg:justify-center">
-            <div className="w-[100svw] lg:w-[50svw] p-4">
+        <div className="flex xl:justify-center">
+            <div className="w-[100svw] xl:w-[50svw] p-4">
                 <div className="text-4xl">Users</div>
                 <Button className="mt-4 mb-1" onPress={() => setUserAddModalOpen(true)}>Add New User</Button>
                 <div className="mt-2">
@@ -93,7 +93,7 @@ export default function Dashboard({cookies}) {
                     })}
                 </div>
             </div>
-            <div className="w-[100svw] lg:w-[50svw] p-4">
+            <div className="w-[100svw] xl:w-[50svw] p-4">
                 <div className="text-4xl">Albums</div>
                 <div className="mt-2">
                     {albums.map((x) => {

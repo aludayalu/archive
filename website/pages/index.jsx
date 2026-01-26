@@ -42,6 +42,7 @@ export default function App({cookies}) {
 
     return (
         <>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <div style={{height: "100vh", width: "100vw"}} className="flex justify-center items-center">
             <div style={{marginTop: "-5svh"}}>
                 <div className="text-center text-2xl">Welcome to Aarav's Archive!</div>
