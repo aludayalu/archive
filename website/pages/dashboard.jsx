@@ -74,7 +74,7 @@ export default function Dashboard({cookies}) {
 
     return (
         <>
-        <div className="flex xl:justify-center">User is in
+        <div className="flex xl:justify-center">
             <div className="w-[100svw] xl:w-[50svw] p-4">
                 <div className="text-4xl">Users</div>
                 <Button className="mt-4 mb-1" onPress={() => setUserAddModalOpen(true)}>Add New User</Button>
