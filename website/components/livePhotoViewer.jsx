@@ -56,7 +56,7 @@ export function LivePhotoViewer({album, id, onPress, square, showDate, showLocat
             }
             videoRef.current.play()
         }} onMouseLeave={() => setHovering(false)} onClick={onPress}>
-        <Card className={"w-full h-full aspect-[5/3] " + (square ? "aspect-square" : "") + (orientation == "horizontal" ? "aspect-[5/3]" : "")} ref={cardRef} radius="none" shadow="none">
+        <Card className={"w-full h-full " + (square ? "aspect-square" : "") + (orientation == "horizontal" ? "aspect-[5/3]" : "")} ref={cardRef} radius="none" shadow="none">
             <CardHeader className="absolute z-10 top-1 flex-col items-start!">
                 {showDate && <p className="text-sm text-white/60 uppercase font-bold">{formatUnixDate(album.time)}</p>}
                 {showLocation && <h4 className="text-white font-medium text-lg">{album.location}</h4>}
