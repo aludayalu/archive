@@ -74,7 +74,7 @@ export default function Dashboard({cookies}) {
 
     return (
         <>
-        <div className="flex xl:justify-center">
+        <div className="flex xl:justify-center">User is in
             <div className="w-[100svw] xl:w-[50svw] p-4">
                 <div className="text-4xl">Users</div>
                 <Button className="mt-4 mb-1" onPress={() => setUserAddModalOpen(true)}>Add New User</Button>
@@ -212,6 +212,7 @@ export default function Dashboard({cookies}) {
                             await fetch(API_URL + "/admin/add_user_to_album?admin_password=" + encodeURIComponent(user_object["password"]) + "&password=" + encodeURIComponent(user_password) + "&album=" + selectedAlbum["id"])
                             setProcessingUpdates((y) => y.filter((item) => item != user_password))
                             await refresh_albums()
+                            referesh_users()
                         }
 
                         AddUser()
