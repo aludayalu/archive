@@ -36,7 +36,7 @@ export default function Dashboard({cookies}) {
         }
     }, [])
 
-    async function referesh_users() {
+    async function refresh_users() {
         var user_object = JSON.parse(localStorage.getItem("user_object"))
 
         await fetch(API_URL + "/admin/get_all_users?admin_password=" + encodeURIComponent(user_object["password"])).then(async (x) => {
@@ -45,7 +45,7 @@ export default function Dashboard({cookies}) {
     }
 
     useEffect(() => {
-        referesh_users()
+        refresh_users()
     }, [])
 
     async function refresh_albums() {
@@ -134,7 +134,7 @@ export default function Dashboard({cookies}) {
                         var request = await fetch(API_URL + "/add_user?admin_password=" + encodeURIComponent(user_object["password"]) + "&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password) + "&name=" + encodeURIComponent(name) + "&email=" + encodeURIComponent(email))
                         var data = await request.json()
 
-                        referesh_users()
+                        refresh_users()
 
                         setUserAddModalOpen(false)
                     }}>Submit</Button>
@@ -164,7 +164,7 @@ export default function Dashboard({cookies}) {
                         await request.json()
 
                         setEditUserModalOpen(false)
-                        referesh_users()
+                        refresh_users()
                     }}>Delete User</Button>
                 </ModalBody>
             </ModalContent>
@@ -193,6 +193,7 @@ export default function Dashboard({cookies}) {
                                         await fetch(API_URL + "/admin/remove_user_from_album?admin_password=" + encodeURIComponent(user_object["password"]) + "&password=" + encodeURIComponent(x.password) + "&album=" + selectedAlbum["id"])
                                         setProcessingUpdates((y) => y.filter((item) => item != x["password"]))
                                         await refresh_albums()
+                                        refresh_users()
                                     }
                                 }}
                             >{x["name"]} {processingUpdates.includes(x["password"]) ? <Spinner size="sm" color=""></Spinner> : <X size={18}></X>}</Button>
@@ -212,7 +213,7 @@ export default function Dashboard({cookies}) {
                             await fetch(API_URL + "/admin/add_user_to_album?admin_password=" + encodeURIComponent(user_object["password"]) + "&password=" + encodeURIComponent(user_password) + "&album=" + selectedAlbum["id"])
                             setProcessingUpdates((y) => y.filter((item) => item != user_password))
                             await refresh_albums()
-                            referesh_users()
+                            refresh_users()
                         }
 
                         AddUser()
