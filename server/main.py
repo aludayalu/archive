@@ -117,7 +117,7 @@ def add_album():
 
     user_object = users.get(secrets["admin_password"])
 
-    user_object["albums"] = [album_hash]
+    user_object["albums"] += [album_hash]
 
     user_object["albums"] = list(set(user_object["albums"]))
 
