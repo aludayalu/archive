@@ -34,10 +34,7 @@ export function LivePhotoViewer({album, id, onPress, square, showDate, showLocat
     }, [inView]);
 
 
-    const spanClass =
-    orientation === "vertical"
-        ? "row-span-3"
-        : ""
+    const spanClass = orientation === "vertical" ? "row-span-3" : ""
 
     return (
         <div className={"cursor-pointer " + spanClass} onMouseEnter={() => {
