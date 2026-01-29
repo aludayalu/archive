@@ -4,14 +4,15 @@ import { Card, CardHeader, Image } from "@heroui/react"
 
 export function LivePhotoViewer({album, id, onPress, square, showDate, showLocation}) {
     const cardRef = useRef(null);
-    const [videoURL, setVideoURL] = useState(null)
     const [inView, setInView] = useState(false);
-    const [playVideo, setPlayVideo] = useState(false)
+    const [hasVideo, setHasVideo] = useState(false)
     const [hovering, setHovering] = useState(false)
     const videoRef = useRef(null)
-    const [videoReady, setVideoReady] = useState(false)
-    
     const [orientation, setOrientation] = useState(null)
+    const user = JSON.parse(localStorage.getItem("user_object"));
+    const videoURL = API_URL + "/get_video" + "?password=" + encodeURIComponent(user.password) + "&album=" + album.id + "&id=" + id;
+    const [playingOnceOnScroll, setPlayingOnceOnScroll] = useState(false)
+    const playVideo = hasVideo && inView && orientation !== null && (hovering || playingOnceOnScroll)
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -24,22 +25,14 @@ export function LivePhotoViewer({album, id, onPress, square, showDate, showLocat
     }, []);
 
     useEffect(() => {
-        if (inView) {
-            fetch(API_URL + "/get_video?password=" + encodeURIComponent(JSON.parse(localStorage.getItem("user_object"))["password"]) + "&album=" + album["id"] + "&id=" + id).then(async (x) => {
-                if (x.status == 404 || x.status == 500) {
-                    return
-                }
-
-                const blob = await x.blob();
-                const url = URL.createObjectURL(blob);
-
-                setVideoURL(url)
-                setPlayVideo(true)
-            })
-        } else {
-            setHovering(false)
+        if (!inView) {
+            setHovering(false);
+            return;
         }
-    }, [inView])
+
+        setPlayingOnceOnScroll(true)
+    }, [inView]);
+
 
     const spanClass =
     orientation === "vertical"
@@ -48,7 +41,6 @@ export function LivePhotoViewer({album, id, onPress, square, showDate, showLocat
 
     return (
         <div className={"cursor-pointer " + spanClass} onMouseEnter={() => {
-            setPlayVideo(true)
             setHovering(true)
 
             if (!playVideo) {
@@ -65,7 +57,7 @@ export function LivePhotoViewer({album, id, onPress, square, showDate, showLocat
                 removeWrapper
                 radius="none" shadow="none"
                 style={{border: "0.1px solid rgba(255, 255, 255, 0.14"}}
-                className={"z-0 w-full h-full object-cover " + ((playVideo && videoURL && videoReady) ? "hidden" : "")}
+                className={"z-0 w-full h-full object-cover " + ((playVideo) ? "hidden" : "")}
                 src={API_URL + "/get_image?password=" + encodeURIComponent(JSON.parse(localStorage.getItem("user_object"))["password"]) + "&album=" + album["id"] + "&id=" + id}
                 onLoad={(e) => {
                     const img = e.target
@@ -85,9 +77,14 @@ export function LivePhotoViewer({album, id, onPress, square, showDate, showLocat
             />
             <video ref={videoRef} onEnded={() => {
                 if (!hovering) {
-                    setPlayVideo(false)
+                    setPlayingOnceOnScroll(false)
                 }
-            }} onLoadStart={() => setVideoReady(false)} onLoadedData={() => setVideoReady(true)} autoPlay playsInline loop={hovering} muted={!hovering} preload="auto" className={"z-0 w-full h-full object-cover " + ((!(playVideo && videoURL && videoReady)) ? "hidden" : "")} src={videoURL}></video>
+            }} 
+            onLoadedMetadata={() => {setHasVideo(true)}}
+            onError={() => {
+                setHasVideo(false)
+            }}
+            autoPlay playsInline loop={hovering} muted={!hovering} preload="auto" className={"z-0 w-full h-full object-cover " + ((!(playVideo)) ? "hidden" : "")} src={videoURL}></video>
         </Card>
         </div>
     )
